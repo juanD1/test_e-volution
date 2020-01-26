@@ -1,7 +1,6 @@
 {
   "name": "taskmanager-security-service",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -9,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch & nodemon src",
+    "dev": "tsc --watch & nodemon dist",
     "devwin": "concurrently --kill-others \"tsc --watch\" \"nodemon src\"",
     "lint": "eslint src --ext ts",
     "tsc": "tsc",
@@ -25,6 +24,7 @@
     "axios": "=0.19.0",
     "bcryptjs": "=2.4.0",
     "body-parser": "=1.18.2",
+    "core-util-is": "^1.0.2",
     "cors": "=2.8.4",
     "express": "=4.15.3",
     "inversify": "=4.13.0",
@@ -69,5 +69,10 @@
       "src/**/*.{ts,tsx,js,jsx}",
       "!src/**/*.d.ts"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/juanD1/test_e-volution/issues"
+  },
+  "homepage": "https://github.com/juanD1/test_e-volution#readme",
+  "description": ""
 }
