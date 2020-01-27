@@ -53,6 +53,7 @@ export const LoginPresenter: React.FunctionComponent<LoginPresenterProps> = prop
                 group
                 type={props.showPassword ? 'text' : 'password'}
                 validate
+                hint={'Click icon to show password'}
                 value={props.password}
                 onChange={props.onChangeHandler}
                 onIconClick={props.onIconClick}
