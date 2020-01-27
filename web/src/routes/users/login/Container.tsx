@@ -1,9 +1,25 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import actions from 'src/state/actions';
+import selectors from 'src/state/selectors';
+import { LoggedUser } from 'src/state/security/types';
+import { LOGIN_SUCCESS } from 'src/state/security/constants';
+import { Credentials } from 'src/models/Credentials';
+
 import { LoginPresenter } from './Presenter';
 import { defaultValidatorValue, validEmailRegex, validateForm } from 'src/utils/validators/validator';
 
+
 interface LoginContainerProps {
   history: any;
+  isAuthenticated: boolean;
+  securityError: boolean;
+  errorMessage: string;
+  actionType: string;
+  loggedUser: LoggedUser;
+  requestLogin(obj: {}): void;
+  clearLoginFailure(): void;
 }
 
 interface LoginContainerState {
@@ -15,6 +31,7 @@ interface LoginContainerState {
   };
   showPassword: boolean;
   disabledButton: boolean;
+  errorMessage: string;
 };
 
 class LoginContainer extends React.Component<LoginContainerProps, LoginContainerState> {
@@ -22,6 +39,7 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
     super(props)
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onIconClick = this.onIconClick.bind(this);
+    this.onAuthenticateClick = this.onAuthenticateClick.bind(this);    
     this.redirectToRegister = this.redirectToRegister.bind(this);
     this.state = {
       email: '',
@@ -31,8 +49,39 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
         password: defaultValidatorValue
       },
       showPassword: false,
-      disabledButton: true
+      disabledButton: true,
+      errorMessage: ''
     }
+  }
+
+  componentDidMount() {
+    if (this.props.loggedUser) {
+      this.props.history.push({
+        pathname: '/user/home'
+      });
+    }      
+  }
+
+  componentDidUpdate(prevProps: LoginContainerProps ) {
+    if (prevProps.actionType !== this.props.actionType) {
+      if (this.props.actionType === LOGIN_SUCCESS) {
+        this.props.history.push({
+          pathname: '/user/home'
+        });
+      }
+    }
+
+    if (prevProps.securityError !== this.props.securityError) {
+      if (this.props.securityError) {
+      this.setState({ errorMessage: this.props.errorMessage });
+      }
+    }
+  }
+
+  onAuthenticateClick() {
+    const {email, password} = this.state;
+    this.props.clearLoginFailure();
+    this.props.requestLogin({ email, password });
   }
 
   onChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -79,12 +128,33 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
         errors={this.state.errors}
         showPassword={this.state.showPassword}
         disabledButton={this.state.disabledButton}
+        errorMessage={this.state.errorMessage}
         onChangeHandler={this.onChangeHandler}
         onIconClick={this.onIconClick}
+        onAuthenticateClick={this.onAuthenticateClick}
         redirectToRegister={this.redirectToRegister}
       />
     );
   }
 }
 
-export default LoginContainer
+const mapStateToProps = (state: any) => ({
+  isAuthenticated: selectors.security.isAuthenticated(state),
+  securityError: selectors.security.securityError(state),
+  loggedUser: selectors.security.loggedUser(state),
+  errorMessage: selectors.security.errorMessage(state),  
+  actionType: selectors.security.securityAction(state)
+});
+
+function mapDispatchToProps(dispatch: Function) {
+  return {
+    requestLogin: (credentials: Credentials) => {
+      dispatch(actions.security.loginRequest(credentials));
+    },    
+    clearLoginFailure: () => {
+      dispatch(actions.security.clearLoginFailure());
+    }
+  };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginContainer));

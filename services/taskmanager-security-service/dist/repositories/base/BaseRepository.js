@@ -33,52 +33,6 @@ let BaseRepository = class BaseRepository {
             return Promise.reject('Error creating the item');
         });
     }
-    createMany(items) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!items || items.length == 0) {
-                return Promise.reject('Error empty items on createMany');
-            }
-            const result = yield this._collection.insertMany(items);
-            if (!!result.result.ok) {
-                return result.ops;
-            }
-            return Promise.reject('Error creating the item');
-        });
-    }
-    updateAndCreate(query, toUpdate) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const result = yield this._collection.update(query, toUpdate, { upsert: true });
-                if (!!result.result.ok) {
-                    return Promise.resolve(result);
-                }
-                else {
-                    return Promise.reject('Error updating the item');
-                }
-            }
-            catch (e) {
-                console.log('Error ...', e);
-                return Promise.reject(e);
-            }
-        });
-    }
-    remove(query) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const result = yield this._collection.remove(query);
-                if (!!result.result.ok) {
-                    return Promise.resolve(result.ops);
-                }
-                else {
-                    return Promise.reject('Error remove the item');
-                }
-            }
-            catch (e) {
-                console.log('Error ...', e);
-                return Promise.reject(e);
-            }
-        });
-    }
     update(id, item) {
         return __awaiter(this, void 0, void 0, function* () {
             const objectId = new mongodb_1.ObjectID(id);
@@ -99,26 +53,10 @@ let BaseRepository = class BaseRepository {
         });
     }
     delete(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const objectId = new mongodb_1.ObjectID(id);
-            try {
-                const result = yield this._collection.deleteOne({ _id: objectId });
-                if (!!result.result.ok) {
-                    return Promise.resolve(true);
-                }
-                else {
-                    return Promise.reject('Error deleting the item');
-                }
-            }
-            catch (e) {
-                console.log('Error ...', e);
-                return Promise.reject(e);
-            }
-        });
+        throw new Error('Method not implemented.');
     }
     find(item) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('** Find query: ', JSON.stringify(item));
             return this._collection.find(item).toArray();
         });
     }
@@ -130,6 +68,7 @@ let BaseRepository = class BaseRepository {
     }
     findOnebyQuery(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("*** findOnebyQuery: ", query);
             return this._collection.findOne(query);
         });
     }

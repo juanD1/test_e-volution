@@ -10,8 +10,8 @@ const generateConfig = (apiDefinition: ApiDefinition) => {
   };
   configObj.method = apiDefinition.method;
   configObj.url =  `${apiDefinition.baseURL}${encodeURI(apiDefinition.url)}`;
-  if (apiDefinition.body) {
-    configObj.data = apiDefinition.body;
+  if (apiDefinition.data) {
+    configObj.data = apiDefinition.data;
   }
   configObj.headers = apiDefinition.headers;
 

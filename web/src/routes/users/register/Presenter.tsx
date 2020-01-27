@@ -16,6 +16,7 @@ interface RegisterPresenterProps {
   };
   disabledButton: boolean;
   errorMessage: string;
+  successfullMessage: string;
   onChangeHandler(e: React.FormEvent<HTMLInputElement>): void;
   handleSubmit(e: React.FormEvent<HTMLButtonElement>): void;  
   redirectToLogin(e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>): void;  
@@ -85,6 +86,7 @@ export const RegisterPresenter: React.FunctionComponent<RegisterPresenterProps> 
             <div className="text-center">
               <MDBBtn color="primary" disabled={props.disabledButton} onClick={props.handleSubmit}>Login</MDBBtn>
               {props.errorMessage.length > 0 && <MDBAlert color="danger">{props.errorMessage}</MDBAlert>}
+              {props.successfullMessage && <MDBAlert color="success">{props.successfullMessage}</MDBAlert>}              
             </div>
           </form>
           <MDBModalFooter>

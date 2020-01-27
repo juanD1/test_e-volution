@@ -13,7 +13,9 @@ const inversify_1 = require("inversify");
 const Identifiers_1 = require("./constants/Identifiers");
 const mongodb_1 = require("mongodb");
 const appVariables_1 = require("../common/appVariables");
-const HelloWorldController_1 = require("../controllers/HelloWorldController");
+const UserController_1 = require("../controllers/UserController");
+const UserRepository_1 = require("../repositories/UserRepository");
+const UserService_1 = require("../services/UserService");
 function initContainer() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('initContainer....');
@@ -27,13 +29,12 @@ function initContainer() {
         const mongoDbConnection = mongoClient.db(`${appVariables_1.DB_NAME}`);
         console.log(`MongoDB connected to ${appVariables_1.DB_NAME} ...`);
         container.bind(Identifiers_1.default.DBConnection).toConstantValue(mongoDbConnection);
-        container.bind(Identifiers_1.default.HelloWorldController).to(HelloWorldController_1.default);
         // repositories
-        // container.bind<ProviderRepository>(SERVICE_IDENTIFIER.ProviderRepository).to(ProviderRepository).inSingletonScope();
+        container.bind(Identifiers_1.default.UserRepository).to(UserRepository_1.UserRepository).inSingletonScope();
         // services
-        // container.bind<ForgotPasswordService>(SERVICE_IDENTIFIER.ForgotPasswordService).to(ForgotPasswordService);
+        container.bind(Identifiers_1.default.UserService).to(UserService_1.default);
         // controllers
-        // container.bind<ForgotPasswordController>(SERVICE_IDENTIFIER.ForgotPasswordController).to(ForgotPasswordController);
+        container.bind(Identifiers_1.default.UserController).to(UserController_1.default);
         return container;
     });
 }

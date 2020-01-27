@@ -12,14 +12,12 @@ const sagaMiddleware = createSagaMiddleware();
 const middleware: [Middleware] = [sagaMiddleware];
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  console.log('Logging redux store...');
   middleware.push(logger);
 }
 
 const persistConfig = {
   key: 'test_e-volution',
-  storage,
-  // blacklist: ['registerParent', 'registerProvider', 'routing' ] // will not be persisted
+  storage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

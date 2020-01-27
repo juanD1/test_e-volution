@@ -5,5 +5,5 @@ export interface ApiDefinition {
   headers: Object;
   url: string;
   baseURL: string;
-  body?: Object;
+  data?: Object;
 }

@@ -7,7 +7,7 @@ import { initContainer } from './dependency_injection/Installer';
 // Servers configuration
 const app: Application = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.SECURITY_SERVICE_PORT || 3001;
 
 initContainer().then((container) => {
     app.listen(port, (err: any) => {

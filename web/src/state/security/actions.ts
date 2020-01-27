@@ -1,9 +1,12 @@
 import * as actionsTypes from './constants';
 import { 
-  LoggedUser,
   Credentials,
+  User,
+  LoggedUser,
   LoginRequestAction,
   LoginSuccessAction,
+  CreateUserRequestAction,
+  CreateUserSuccessAction,
   SecurityAction,
   SecurityActionError
 } from './types';
@@ -36,6 +39,33 @@ export const logoutRequest = (): SecurityAction => {
 };
 
 export const clearLoginFailure = (): SecurityAction => {
+  return {
+    type: actionsTypes.CLEAR_LOGIN_FAILURE,
+  };
+};
+
+export const createUserRequest = (user: User): CreateUserRequestAction => {
+  return {
+    type: actionsTypes.CREATE_USER_REQUEST,
+    user
+  };
+};
+
+export const createUserSuccess = (user: User): CreateUserSuccessAction => {
+  return {
+    type: actionsTypes.CREATE_USER_SUCCESS,
+    user
+  };  
+};
+
+export const createUserFailure = (response: string): SecurityActionError => {
+  return {
+    type: actionsTypes.CREATE_USER_FAILURE,
+    response
+  };
+};
+
+export const clearCreateUserFailure = (): SecurityAction => {
   return {
     type: actionsTypes.CLEAR_LOGIN_FAILURE,
   };

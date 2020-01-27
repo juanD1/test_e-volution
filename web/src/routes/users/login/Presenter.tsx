@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBModalFooter } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBModalFooter, MDBAlert } from 'mdbreact';
 import { defaultValidatorValue, validateStyle } from 'src/utils/validators/validator';
 
 interface LoginPresenterProps {
@@ -12,8 +12,10 @@ interface LoginPresenterProps {
   };
   showPassword: boolean;
   disabledButton: boolean;
+  errorMessage: string;
   onChangeHandler(e: React.FormEvent<HTMLInputElement>): void;  
   onIconClick(e: React.SyntheticEvent<MouseEvent>): void;
+  onAuthenticateClick(): void;
   redirectToRegister(e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>): void;
 }
 
@@ -59,7 +61,8 @@ export const LoginPresenter: React.FunctionComponent<LoginPresenterProps> = prop
               </MDBInput>
             </div>
             <div className="text-center">
-              <MDBBtn disabled={props.disabledButton}>Login</MDBBtn>
+              <MDBBtn disabled={props.disabledButton} onClick={props.onAuthenticateClick}>Login</MDBBtn>
+              {props.errorMessage.length > 0 && <MDBAlert color="danger">{props.errorMessage}</MDBAlert>}
             </div>
           </form>
           <MDBModalFooter>
