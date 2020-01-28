@@ -12,11 +12,20 @@ const Identifiers_1 = require("../dependency_injection/constants/Identifiers");
 let TaskController = class TaskController {
     constructor() {
         this.create = this.create.bind(this);
+        this.get = this.get.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
     }
     create(req, res, next) {
         this._registryService.createTask(req.body)
+            .then(result => res.json(result))
+            .catch((err) => {
+            console.log("Error: ", err);
+            errorHandler_1.apiErrorHandler(err, req, res);
+        });
+    }
+    get(req, res, next) {
+        this._registryService.getTasks(req.params.userId)
             .then(result => res.json(result))
             .catch((err) => {
             console.log("Error: ", err);

@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { LOGIN_REQUEST, CREATE_USER_REQUEST } from './constants';
-import {  LoggedUser, User, LoginRequestAction, CreateUserRequestAction, } from './types';
+import {  LoggedUser, User, LoginRequestAction, CreateUserRequestAction } from './types';
 import { loginFailure, loginSuccess, createUserFailure, createUserSuccess } from './actions';
 import axiosNetworkClient from '../../utils/networkLayer/axiosNetworkClient';
 import { authenticateUser, createUser } from './api';

@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
 
 import securitySagas from './security/sagas';
+import tasksSagas from './tasks/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware: [Middleware] = [sagaMiddleware];
@@ -25,5 +26,6 @@ const store: Store<any> = createStore(persistedReducer, composeWithDevTools(appl
 const persistor = persistStore(store);
 
 sagaMiddleware.run(securitySagas);
+sagaMiddleware.run(tasksSagas);
 
 export { store, persistor };

@@ -12,12 +12,22 @@ export default class TaskController {
 
     constructor() {
         this.create = this.create.bind(this);
+        this.get = this.get.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
     }
 
     create(req: Request, res: Response, next: NextFunction) {
         this._registryService.createTask(req.body)
+        .then(result => res.json(result))
+        .catch((err: ErrorResponse) => {
+            console.log("Error: ", err);
+            apiErrorHandler(err, req, res);
+        })
+    }
+
+    get(req: Request, res: Response, next: NextFunction) {
+        this._registryService.getTasks(req.params.userId)
         .then(result => res.json(result))
         .catch((err: ErrorResponse) => {
             console.log("Error: ", err);

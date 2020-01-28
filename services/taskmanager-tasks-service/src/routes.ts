@@ -14,8 +14,9 @@ export default class Routes extends BaseRoutes {
         super(app);
         this.taskController = container.get<TaskController>(SERVICE_IDENTIFIER.TaskController);
 
-        app.route("/api/task").post(this.taskController.create);
-        app.route("/api/task/:id").put(this.taskController.update);
-        app.route("/api/task/:id").delete(this.taskController.delete);
+        app.route("/api/tasks").post(this.taskController.create);
+        app.route("/api/tasks/:userId").get(this.taskController.get);
+        app.route("/api/tasks/:id").put(this.taskController.update);
+        app.route("/api/tasks/:id").delete(this.taskController.delete);
     }
 }

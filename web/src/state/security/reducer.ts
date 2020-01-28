@@ -1,3 +1,4 @@
+import * as actionTypes from './constants';
 import {
   LoginRequestAction,
   LoginSuccessAction,
@@ -5,7 +6,6 @@ import {
   SecurityAction,
   SecurityActionError
 } from './types';
-import * as actionTypes from './constants';
 
 const defaultState: SecurityState = {
   isAuthenticated: false,

@@ -77,7 +77,6 @@ let BaseRepository = class BaseRepository {
     }
     findOnebyQuery(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("*** findOnebyQuery: ", query);
             return this._collection.findOne(query);
         });
     }

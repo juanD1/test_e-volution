@@ -51,7 +51,7 @@ export abstract class BaseRepository<T extends DBEntityModel> implements IWrite<
     }
   }
   
-  async find(item: T): Promise<T[]> {
+  async find(item: any): Promise<T[]> {
     return this._collection.find(item).toArray();
   }
   
@@ -61,7 +61,6 @@ export abstract class BaseRepository<T extends DBEntityModel> implements IWrite<
   }
   
   async findOnebyQuery(query: any): Promise<T> {
-    console.log("*** findOnebyQuery: ", query)
     return this._collection.findOne(query);
   }
 }

@@ -31,6 +31,17 @@ let TaskService = class TaskService {
             }
         });
     }
+    getTasks(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const foundTasks = yield this.taskRepository.find({ userId: userId });
+                return Promise.resolve(foundTasks);
+            }
+            catch (error) {
+                return Promise.reject(errorHandler_1.fillErrorResponse(500, errorConstants_1.INTERNAL_SERVER_ERROR, 'Internal server error', error));
+            }
+        });
+    }
     updateTask(taskId, taskNewData) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

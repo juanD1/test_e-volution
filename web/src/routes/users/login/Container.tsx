@@ -55,7 +55,7 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
   }
 
   componentDidMount() {
-    if (this.props.loggedUser) {
+    if (this.props.isAuthenticated) {
       this.props.history.push({
         pathname: '/user/home'
       });

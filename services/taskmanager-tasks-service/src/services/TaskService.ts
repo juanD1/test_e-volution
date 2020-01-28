@@ -22,6 +22,16 @@ export default class TaskService {
     }
   }
 
+  async getTasks(userId: string): Promise<Task[]> {
+    try {
+      const foundTasks: Task[] = await this.taskRepository.find({ userId: userId });
+
+      return Promise.resolve(foundTasks);
+    } catch (error) {
+      return Promise.reject(fillErrorResponse(500, INTERNAL_SERVER_ERROR, 'Internal server error', error));
+    }
+  }  
+
   async updateTask(taskId: string, taskNewData: Task): Promise<Task> {
     try {
       taskNewData.expired = new Date(taskNewData.expired);
