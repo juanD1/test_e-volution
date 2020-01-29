@@ -1,6 +1,6 @@
 import { DBEntityModel } from "./DBEntityModel";
 
-enum Prority {
+enum Priority {
     HIGH='HIGH',
     MEDIUM='MEDIUM',
     LOW='LOW'
@@ -9,6 +9,6 @@ enum Prority {
 export class Task extends DBEntityModel {
     userId: string;
     name: string;
-    priority: Prority;
+    priority: Priority;
     expired: Date;
 }

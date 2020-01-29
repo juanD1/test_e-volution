@@ -21,14 +21,19 @@ interface HomeContainerProps {
 }
 
 interface HomeContainerState {
+  activedCreateModal: boolean;
+  activedUpdateModal: boolean;
 };
 
 class HomeContainer extends React.Component<HomeContainerProps, HomeContainerState> {
   constructor(props: HomeContainerProps) {
     super(props)
+    this.onClickActiveModal = this.onClickActiveModal.bind(this);
     this.logout = this.logout.bind(this);
     this.deleteTask = this.deleteTask.bind(this);    
-    this.state = {      
+    this.state = {
+      activedCreateModal: false,
+      activedUpdateModal: false
     }
   }
 
@@ -37,6 +42,14 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     if (loggedUser) {
       this.props.requestGetTaskByUserId(loggedUser.id);
     }
+  }
+
+  onClickActiveModal = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+    const cloneState = Object(this.state);
+    const value = cloneState[name]
+    // @ts-ignore: Ignore Type error due to update based on dynamic index
+    this.setState({ [name]: !value });
   }
 
   logout() {
@@ -57,6 +70,10 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
       <HomePresenter 
         history={this.props.history}
         tasks={this.props.loadedTasks}
+        activedCreateModal={this.state.activedCreateModal}
+        activedUpdateModal={this.state.activedUpdateModal}        
+        // ---
+        onClickActiveModal={this.onClickActiveModal}
         logout={this.logout}
         deleteTask={this.deleteTask}
       />

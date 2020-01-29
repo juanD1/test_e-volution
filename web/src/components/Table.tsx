@@ -6,6 +6,7 @@ import { Task } from 'src/models/Task';
 interface TableProps {
   tasks: Task[];
   deleteTask(taskId: string): void;
+  onClickActiveModal(e: React.SyntheticEvent<HTMLButtonElement>): void;
 }
 
 export const Table: React.FC<TableProps> = (props) => {  
@@ -26,7 +27,6 @@ export const Table: React.FC<TableProps> = (props) => {
           {
             props.tasks.map((task: Task, index: any) =>
             <tr key={index}>
-              {console.log('task', task)}
                 <td>{index}</td>
                 <td>{task.name}</td>
                 <td>{task.priority}</td>
@@ -34,7 +34,7 @@ export const Table: React.FC<TableProps> = (props) => {
                   <Moment format={'MMMM Do YYYY, h:mm:ss a'}>{task.expired}</Moment>
                 </td>
                 <td>
-                  <MDBBtn color="warning">Update</MDBBtn>
+                  <MDBBtn name="activedUpdateModal" color="warning" onClick={props.onClickActiveModal}>Update</MDBBtn>
                   <MDBBtn color="danger" onClick={() => props.deleteTask(task._id)}>Delete</MDBBtn>
                 </td>
               </tr>

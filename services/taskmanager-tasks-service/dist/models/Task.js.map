@@ -1,1 +1,1 @@
-{"version":3,"file":"Task.js","sourceRoot":"","sources":["../../src/models/Task.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,IAAK,OAIJ;AAJD,WAAK,OAAO;IACR,wBAAW,CAAA;IACX,4BAAe,CAAA;IACf,sBAAS,CAAA;AACb,CAAC,EAJI,OAAO,KAAP,OAAO,QAIX;AAED,UAAkB,SAAQ,6BAAa;CAKtC;AALD,oBAKC"}
+{"version":3,"file":"Task.js","sourceRoot":"","sources":["../../src/models/Task.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,IAAK,QAIJ;AAJD,WAAK,QAAQ;IACT,yBAAW,CAAA;IACX,6BAAe,CAAA;IACf,uBAAS,CAAA;AACb,CAAC,EAJI,QAAQ,KAAR,QAAQ,QAIZ;AAED,UAAkB,SAAQ,6BAAa;CAKtC;AALD,oBAKC"}

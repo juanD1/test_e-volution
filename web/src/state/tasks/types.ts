@@ -1,5 +1,5 @@
 import { Action } from '../types';
-import { Task, Prority } from 'src/models/Task';
+import { Task, Priority } from 'src/models/Task';
 
 export interface TaskState {
   tasks: LoadedTask[] | null;
@@ -12,7 +12,7 @@ export type LoadedTask = {
   id: string;
   userId: string;
   name: string;
-  priority: Prority;
+  priority: Priority;
   expired: Date;
 };
 
