@@ -5,10 +5,11 @@ import { Task } from 'src/models/Task';
 
 interface TableProps {
   tasks: Task[];
+  deleteTask(taskId: string): void;
 }
 
 export const Table: React.FC<TableProps> = (props) => {  
-  if (props.tasks) {
+  if (props.tasks && props.tasks.length) {
     return (
 
       <MDBTable responsive >
@@ -34,7 +35,7 @@ export const Table: React.FC<TableProps> = (props) => {
                 </td>
                 <td>
                   <MDBBtn color="warning">Update</MDBBtn>
-                  <MDBBtn color="danger">Delete</MDBBtn>
+                  <MDBBtn color="danger" onClick={() => props.deleteTask(task._id)}>Delete</MDBBtn>
                 </td>
               </tr>
             )

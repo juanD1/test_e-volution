@@ -5,6 +5,7 @@ export enum Prority {
 }
 
 export interface Task {
+    _id: string;
     userId: string;
     name: string;
     priority: Prority;

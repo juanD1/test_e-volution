@@ -70,3 +70,9 @@ export const clearCreateUserFailure = (): SecurityAction => {
     type: actionsTypes.CLEAR_LOGIN_FAILURE,
   };
 };
+
+export const clearSecurity = (): SecurityAction => {
+  return {
+    type: actionsTypes.CLEAR_SECURITY
+  };
+};

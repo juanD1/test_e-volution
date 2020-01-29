@@ -5,6 +5,7 @@ import { Table } from 'src/components/Table';
 
 interface ManagerTasksProps {
   tasks: Task[];
+  deleteTask(taskId: string): void;
 }
 
 export const ManagerTasks: React.FunctionComponent<ManagerTasksProps> = props => {
@@ -13,7 +14,10 @@ export const ManagerTasks: React.FunctionComponent<ManagerTasksProps> = props =>
       <div style={{display: 'grid'}}>
         <MDBBtn color="info">Create Task</MDBBtn>
       </div>
-      <Table tasks={props.tasks}/>
+      <Table 
+        tasks={props.tasks}
+        deleteTask={props.deleteTask}
+      />
     </div>
   )
 }

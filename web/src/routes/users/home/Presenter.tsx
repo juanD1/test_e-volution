@@ -7,6 +7,7 @@ interface HomePresenterProps {
   history: any;
   tasks: Task[];
   logout(): void;
+  deleteTask(taskId: string): void;
 }
 
 export const HomePresenter: React.FunctionComponent<HomePresenterProps> = props => {
@@ -18,7 +19,10 @@ export const HomePresenter: React.FunctionComponent<HomePresenterProps> = props 
         </MDBBtn>
         Hola soy el Home
       </div>
-      <ManagerTasks tasks={props.tasks} />
+      <ManagerTasks 
+        tasks={props.tasks}
+        deleteTask={props.deleteTask}
+      />
     </div>
   );
 }

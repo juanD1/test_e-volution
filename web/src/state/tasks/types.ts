@@ -1,5 +1,5 @@
 import { Action } from '../types';
-import { Prority } from 'src/models/Task';
+import { Task, Prority } from 'src/models/Task';
 
 export interface TaskState {
   tasks: LoadedTask[] | null;
@@ -28,4 +28,28 @@ export interface GetTasksRequestAction extends Action {
 
 export interface GetTasksRequestSuccessAction extends Action {
   tasks: LoadedTask[];
+}
+
+export interface CreateTaskRequestAction extends Action {
+  task: Task;
+}
+
+export interface CreateTaskRequestSuccessAction extends Action {
+  task: Task;
+}
+
+export interface UpdateTaskRequestAction extends Action {
+  taskId: string;
+  task: Task;
+}
+
+export interface UpdateTaskRequestSuccessAction extends Action {
+  task: Task;
+}
+
+export interface DeleteTaskRequestAction extends Action {
+  taskId: string;
+}
+
+export interface DeleteTaskRequestSuccessAction extends Action {  
 }

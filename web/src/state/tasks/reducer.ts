@@ -3,6 +3,12 @@ import {
   LoadedTask,
   GetTasksRequestAction,
   GetTasksRequestSuccessAction,
+  CreateTaskRequestAction,
+  CreateTaskRequestSuccessAction,
+  UpdateTaskRequestAction,
+  UpdateTaskRequestSuccessAction,
+  DeleteTaskRequestAction,
+  DeleteTaskRequestSuccessAction,
   TaskState,
   TaskAction,
   TaskActionError
@@ -15,9 +21,10 @@ const defaultState: TaskState = {
   taskError: false,
 };
 
+
 const TaskReducer = (
   state: TaskState = defaultState, 
-  action: TaskAction | GetTasksRequestAction | GetTasksRequestSuccessAction | TaskActionError
+  action: TaskAction | GetTasksRequestAction | GetTasksRequestSuccessAction | CreateTaskRequestAction | CreateTaskRequestSuccessAction | UpdateTaskRequestAction | UpdateTaskRequestSuccessAction | DeleteTaskRequestAction | DeleteTaskRequestSuccessAction | TaskActionError
 ) => {
   switch (action.type) {
     case actionTypes.GET_TASKS_REQUEST: {
@@ -29,9 +36,36 @@ const TaskReducer = (
     case actionTypes.GET_TASKS_FAILURE: {
       return { ...state, taskError: true, taskAction: action.type, errorMessage: (action as TaskActionError).response };
     }
-    // case actionTypes.CLEAR_LOGIN_FAILURE: {
-    //   return { ...state, taskError: false, errorMessage: '', taskAction: action.type, user: null };
-    // }
+    case actionTypes.CREATE_TASK_REQUEST: {
+      return {...state, taskAction: action.type};
+    }
+    case actionTypes.CREATE_TASK_SUCCESS: {
+      return { ...state, task: (action as CreateTaskRequestSuccessAction).task, taskAction: action.type };
+    }
+    case actionTypes.CREATE_TASK_FAILURE: {
+      return { ...state, taskError: true, taskAction: action.type, errorMessage: (action as TaskActionError).response };
+    }
+    case actionTypes.UPDATE_TASK_REQUEST: {
+      return {...state, taskAction: action.type};
+    }
+    case actionTypes.UPDATE_TASK_SUCCESS: {
+      return { ...state, task: (action as UpdateTaskRequestSuccessAction).task, taskAction: action.type };
+    }
+    case actionTypes.UPDATE_TASK_FAILURE: {
+      return { ...state, taskError: true, taskAction: action.type, errorMessage: (action as TaskActionError).response };
+    }
+    case actionTypes.DELETE_TASK_REQUEST: {
+      return {...state, taskAction: action.type};
+    }
+    case actionTypes.DELETE_TASK_SUCCESS: {
+      return { ...state, taskAction: action.type };
+    }
+    case actionTypes.DELETE_TASK_FAILURE: {
+      return { ...state, taskError: true, taskAction: action.type, errorMessage: (action as TaskActionError).response };
+    }
+    case actionTypes.CLEAR_TASKS: {        
+      return { ...defaultState };
+    }
     default:
     {
       return state;

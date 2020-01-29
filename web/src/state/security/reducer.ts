@@ -47,6 +47,9 @@ const SecurityReducer = (
     case actionTypes.CLEAR_CREATE_USER_FAILURE: {
       return { ...state, securityError: false, errorMessage: '', securityAction: action.type };
     }
+    case actionTypes.CLEAR_SECURITY: {        
+      return { ...defaultState };
+    }
     default:
     {
       return state;
