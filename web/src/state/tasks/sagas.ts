@@ -31,13 +31,15 @@ function* requestCreateTask(action: CreateTaskRequestAction) {
   try {
     const response = yield call(axiosNetworkClient, createTask(action.task));
     const createdTask: Task = {
-      _id: response.data._id,
       userId: response.data.userId,
       name: response.data.name,
       priority: response.data.priority,
       expired: response.data.expired,
     };
     yield put(createTaskSuccess(createdTask));
+    if (response.data) {
+      yield put(getTasksRequest(createdTask.userId));
+    }
   } catch (e) {
     yield put(createTaskFailure((e.response && e.response.data) ? e.response.data.Message.description : 'An error ocurred'));
     console.log(e);

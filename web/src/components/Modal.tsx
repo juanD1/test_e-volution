@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { MDBInput, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import DateTimePicker from 'react-datetime-picker';
 
 interface ModalProps {
   modal: boolean;
@@ -13,12 +14,13 @@ interface ModalProps {
   fields: {
     typeComponent: string;
     name: string;
-    label: string;
-    icon: string;
+    label?: string;
+    icon?: string;
     type: string;
     value?: string;
+    dateTimevalue?: Date;
     options?: {value:string}[];
-    onChangeHandler(e: React.FormEvent<HTMLInputElement>): void;
+    onChangeHandler(e: any): void;
   }[]
   toggle(e: React.SyntheticEvent<HTMLButtonElement>): void;
 }
@@ -29,9 +31,10 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
       <MDBModalHeader>{props.title}</MDBModalHeader>
       <MDBModalBody>
         {
-          props.fields.map(field => 
+          props.fields.map((field, key) => 
             field.typeComponent === 'INPUT' ?
               <MDBInput
+                key={key}
                 name={field.name}              
                 label={field.label}
                 icon={field.icon}
@@ -41,13 +44,26 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
               />
             : field.typeComponent === 'SELECT' ?
                 field.options && 
-                  <select className="browser-default custom-select">
-                    <option value="" disabled selected>Choose priority</option>
-                    {field.options.map(option =>
-                      <option value={option.value}>{option.value}</option>                      
+                  <select 
+                    className="browser-default custom-select" 
+                    key={key} 
+                    name={field.name} 
+                    value={field.value}
+                    onChange={field.onChangeHandler}
+                  >
+                    {field.options.map((option, key) =>
+                      <option key={key} value={option.value}>{option.value}</option>                      
                     )}
                   </select>  
-              : null                  
+              : field.typeComponent === 'DATETIMEPICKER' ?
+                  <div key={key} style={{display: 'grid', marginTop: 25}}>
+                    <DateTimePicker
+                      name={field.name}   
+                      value={field.dateTimevalue}
+                      onChange={field.onChangeHandler}
+                    />
+                  </div>
+                : null
           )
         }
       </MDBModalBody>

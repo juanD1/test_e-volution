@@ -5,7 +5,7 @@ export enum Priority {
 }
 
 export interface Task {
-    _id: string;
+    _id?: string;
     userId: string;
     name: string;
     priority: Priority;

@@ -17,7 +17,8 @@ export const createTask = (task: Task) => {
     method: httpMethods.POST,
     headers: basicHeaders,
     baseURL: basePaths.tasks,
-    url: ''
+    url: '',
+    data: task
   };
 };
 
@@ -26,7 +27,8 @@ export const updateTask = (taskId: string, task: Task) => {
     method: httpMethods.PUT,
     headers: basicHeaders,
     baseURL: basePaths.tasks,
-    url: `${taskId}`
+    url: `${taskId}`,
+    data: task
   };
 };
 
