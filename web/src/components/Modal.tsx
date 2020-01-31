@@ -16,11 +16,11 @@ interface ModalProps {
     name: string;
     label?: string;
     icon?: string;
-    type: string;
+    type?: string;
     value?: string;
     dateTimevalue?: Date;
     options?: {value:string}[];
-    onChangeHandler(e: any): void;
+    onChangeHandler?(e: any): void;
   }[]
   toggle(e: React.SyntheticEvent<HTMLButtonElement>): void;
 }
@@ -51,6 +51,7 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
                     value={field.value}
                     onChange={field.onChangeHandler}
                   >
+                    <option value="" disabled selected>Choose priority</option>
                     {field.options.map((option, key) =>
                       <option key={key} value={option.value}>{option.value}</option>                      
                     )}
@@ -60,10 +61,13 @@ export const Modal: React.FunctionComponent<ModalProps> = props => {
                     <DateTimePicker
                       name={field.name}   
                       value={field.dateTimevalue}
+                      minDate={new Date()}
                       onChange={field.onChangeHandler}
                     />
                   </div>
-                : null
+                : field.typeComponent === 'TEXT' ?                      
+                    <p key={key}>{field.label}</p>
+                  : null
           )
         }
       </MDBModalBody>

@@ -5,7 +5,6 @@ import selectors from 'src/state/selectors';
 import { persistor } from 'src/state/store';
 import { LoggedUser } from 'src/state/security/types';
 import { Task, Priority } from 'src/models/Task';
-
 import { HomePresenter } from './Presenter';
 
 interface HomeContainerProps {
@@ -18,6 +17,7 @@ interface HomeContainerProps {
   clearTasks(): void;
   requestGetTaskByUserId(userId: string): void;
   requestCreateTask(task: Task): void;
+  requestUpdateTask(taskId: string, task: Task): void;
   requestDeleteTask(taskId: string): void;
 }
 
@@ -28,6 +28,7 @@ interface HomeContainerState {
   expiredTask: Date;
   activedCreateModal: boolean;
   activedUpdateModal: boolean;
+  activedDeleteModal: boolean;
 };
 
 class HomeContainer extends React.Component<HomeContainerProps, HomeContainerState> {
@@ -35,9 +36,11 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     super(props)
     this.onClickActiveModal = this.onClickActiveModal.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onChangeDateTimeHandler = this.onChangeDateTimeHandler.bind(this);    
+    this.onChangeDateTimeHandler = this.onChangeDateTimeHandler.bind(this);
+    this.nearstTask = this.nearstTask.bind(this);    
     this.logout = this.logout.bind(this);
     this.createTask = this.createTask.bind(this);
+    this.updateTask = this.updateTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);    
     this.state = {
       taskId: '',
@@ -45,7 +48,8 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
       priorityTask: Priority.HIGH,
       expiredTask: new Date(),
       activedCreateModal: false,
-      activedUpdateModal: false
+      activedUpdateModal: false,
+      activedDeleteModal: false
     }
   }
 
@@ -61,16 +65,17 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     const cloneState = Object(this.state);
     const value = cloneState[name]
     // @ts-ignore: Ignore Type error due to update based on dynamic index
-    this.setState({ [name]: !value});
+    this.setState({
+      [name]: !value,
+      nameTask: '',
+      priorityTask: '',
+      expiredTask: new Date()
+    });
 
-    console.log('<i> ', i);
-    console.log('<id>>', idHandler);
     if(i !== undefined && idHandler) {
       const recordToEdit = this.props.loadedTasks.filter((item, index) => {
-        console.log('index', index);
         return index === i;
       })[0];
-      console.log('recordToEdit', recordToEdit);
       this.setState({
         taskId: idHandler,
         nameTask: recordToEdit.name,
@@ -81,7 +86,6 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
   }
 
   onChangeHandler = (e: React.FormEvent<any>) => {
-    console.log(e);
     const { name, value } = e.currentTarget;
     // @ts-ignore: Ignore Type error due to update based on dynamic index
     this.setState({ [name]: value });
@@ -89,6 +93,17 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
 
   onChangeDateTimeHandler = (dateTime: Date) => {
     this.setState({ expiredTask: dateTime });
+  }
+
+  nearstTask(tasks: Task[]): Task | null {
+    if (this.props.loadedTasks && this.props.loadedTasks.length) {
+      const sortedTasks = tasks.sort((a: Task, b: Task) => {
+        return new Date(a.expired).getTime() - new Date(b.expired).getTime();
+      });   
+      return sortedTasks[0]; 
+    } else {
+      return null;
+    }
   }
 
   logout() {
@@ -100,13 +115,18 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
   }
 
   createTask(task: Task) {
-    const activedCreateModal = false;
     this.props.requestCreateTask(task);
-    this.setState({ activedCreateModal });
+    this.setState({ activedCreateModal: false });
+  }
+
+  updateTask(taskId: string, task: Task) {
+    this.props.requestUpdateTask(taskId, task);
+    this.setState({ activedUpdateModal: false });
   }
 
   deleteTask(taskId: string) {
     this.props.requestDeleteTask(taskId);
+    this.setState({ activedDeleteModal: false });
   }
 
   render () {
@@ -115,16 +135,20 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
         history={this.props.history}
         loggedUser={this.props.loggedUser}
         tasks={this.props.loadedTasks}
+        selectedTaskId={this.state.taskId}
         nameTask={this.state.nameTask}
         priorityTask={this.state.priorityTask}
         expiredTask={this.state.expiredTask}
         activedCreateModal={this.state.activedCreateModal}
-        activedUpdateModal={this.state.activedUpdateModal}        
+        activedUpdateModal={this.state.activedUpdateModal}
+        activedDeleteModal={this.state.activedDeleteModal}        
         onClickActiveModal={this.onClickActiveModal}
         onChangeHandler={this.onChangeHandler}
         onChangeDateTimeHandler={this.onChangeDateTimeHandler}
+        nearstTask={this.nearstTask}        
         logout={this.logout}
         createTask={this.createTask}
+        updateTask={this.updateTask}
         deleteTask={this.deleteTask}
       />
     );
@@ -153,6 +177,9 @@ function mapDispatchToProps(dispatch: Function) {
     },
     requestCreateTask: (task: Task) => {
       dispatch(actions.tasks.createTaskRequest(task));
+    },
+    requestUpdateTask: (taskId: string, task: Task) => {
+      dispatch(actions.tasks.updateTaskRequest(taskId, task));
     },
     requestDeleteTask: (taskId: string) => {
       dispatch(actions.tasks.deleteTaskRequest(taskId));

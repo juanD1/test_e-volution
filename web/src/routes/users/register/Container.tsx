@@ -5,7 +5,6 @@ import actions from 'src/state/actions';
 import selectors from 'src/state/selectors';
 import { CREATE_USER_SUCCESS } from 'src/state/security/constants';
 import { Users } from 'src/models/Users';
-
 import { RegisterPresenter } from './Presenter';
 import { defaultValidatorValue, validEmailRegex, validateForm } from 'src/utils/validators/validator';
 
@@ -34,20 +33,6 @@ interface RegisterContainerState {
   successfullMessage: string;
 };
 
-// const initialState = {
-//   username: '',
-//   email: '',
-//   password: '',
-//   confirmPassword: '',
-//   errors: {
-//     username: defaultValidatorValue,
-//     email: defaultValidatorValue,
-//     password: defaultValidatorValue,
-//     confirmPassword: defaultValidatorValue
-//   },
-//   disabledButton: true 
-// };
-
 class RegisterContainer extends React.Component<RegisterContainerProps, RegisterContainerState> {
   constructor(props: RegisterContainerProps) {
     super(props)
@@ -56,7 +41,6 @@ class RegisterContainer extends React.Component<RegisterContainerProps, Register
     this.redirectToLogin = this.redirectToLogin.bind(this);
     this.resetStates = this.resetStates.bind(this);    
     this.state = {
-      // ...initialState,
       username: '',
       email: '',
       password: '',

@@ -42,7 +42,6 @@ function* requestCreateTask(action: CreateTaskRequestAction) {
     }
   } catch (e) {
     yield put(createTaskFailure((e.response && e.response.data) ? e.response.data.Message.description : 'An error ocurred'));
-    console.log(e);
   }
 }
 
@@ -57,9 +56,11 @@ function* requestUpdateTask(action: UpdateTaskRequestAction) {
       expired: response.data.expired,
     };
     yield put(updateTaskSuccess(updatedTask));
+    if (response) {
+      yield put(getTasksRequest(updatedTask.userId));
+    }
   } catch (e) {
     yield put(updateTaskFailure((e.response && e.response.data) ? e.response.data.Message.description : 'An error ocurred'));
-    console.log(e);
   }
 }
 
@@ -73,7 +74,6 @@ function* requestDeleteTask(action: DeleteTaskRequestAction) {
     }
   } catch (e) {
     yield put(deleteTaskFailure((e.response && e.response.data) ? e.response.data.Message.description : 'An error ocurred'));
-    console.log(e);
   }
 }
 

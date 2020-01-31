@@ -6,7 +6,6 @@ import selectors from 'src/state/selectors';
 import { LoggedUser } from 'src/state/security/types';
 import { LOGIN_SUCCESS } from 'src/state/security/constants';
 import { Credentials } from 'src/models/Credentials';
-
 import { LoginPresenter } from './Presenter';
 import { defaultValidatorValue, validEmailRegex, validateForm } from 'src/utils/validators/validator';
 

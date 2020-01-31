@@ -1,0 +1,25 @@
+{
+  "name": "test_e-volution",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "security-service": "cd services/taskmanager-security-service && npm run dev",
+    "tasks-service": "cd services/taskmanager-tasks-service && npm run dev",
+    "client": "cd web && npm start",
+    "start": "concurrently --kill-others \"npm run security-service\" \"npm run tasks-service\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanD1/test_e-volution.git"
+  },
+  "author": "Juan David Coronado Saldaña",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanD1/test_e-volution/issues"
+  },
+  "homepage": "https://github.com/juanD1/test_e-volution#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  }
+}

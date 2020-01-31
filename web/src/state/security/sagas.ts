@@ -30,7 +30,6 @@ function* requestCreateUser(action: CreateUserRequestAction) {
     yield put(createUserSuccess(createdUser));
   } catch (e) {
     yield put(createUserFailure((e.response && e.response.data) ? e.response.data.Message.description : 'An error ocurred'));
-    console.log(e);
   }
 }
 

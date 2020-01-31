@@ -1,6 +1,5 @@
 import * as actionTypes from './constants';
 import { 
-  LoadedTask,
   GetTasksRequestAction,
   GetTasksRequestSuccessAction,
   CreateTaskRequestAction,
