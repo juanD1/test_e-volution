@@ -4,9 +4,9 @@
 Eeste repositorio contiene una aplicacion que te permite gestionar tus tareas, cuenta con un modulo de Login y Signin.
 Esta aplicación fue desarrollada en Node.js y React.js(redux).
 
-#### Pre-requisitos
+## Pre-requisitos
 
-##### Setear las siguientes variables a tu variables de ambiente
+#### Setear las siguientes variables a tu variables de ambiente
 En el sistema operativo Debian 9 (Sistema operativo en el cual se desarrollo el contenido de este repositorio) debes seguir los siguientes pasos:
 * agregar las siguientes variables al archivo bash_profile (con vsCode en una terminal: ```code ~.bash_profile```)
 ```
@@ -23,11 +23,11 @@ En el sistema operativo Debian 9 (Sistema operativo en el cual se desarrollo el 
 ```
 * actualizar el archivo bash_profile (en terminal: ```source ~/.bash_profile```)
 
-##### Crear Base de datos y Colecciones en MongoDB
+#### Crear Base de datos y Colecciones en MongoDB
 * Nombre de la base de datos ```task-manager```
 * Nombre de las coleciones ```Users - Tasks```
 
-#### Instalación
+## Instalación
 
 * Clonar el repositorio
 ``` git clone https://github.com/juanD1/test_e-volution.git ```
@@ -37,6 +37,16 @@ En el sistema operativo Debian 9 (Sistema operativo en el cual se desarrollo el 
 
 * Iniciar
 ``` npm start  ```
+
+## Detalles tecnicos
+
+### Front-end
+* Rutas aseguradas.
+* Almacenamiento de datos en localStorage con la libreria ```redux-persist``` para mantener la sesión del usuario activa
+
+### Back-end
+* Estructura de microservicios
+* Contraseñas encriptadas
 
 
 
