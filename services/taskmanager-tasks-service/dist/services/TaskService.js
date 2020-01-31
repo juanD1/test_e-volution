@@ -23,7 +23,9 @@ let TaskService = class TaskService {
     createTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                task.expired = new Date(task.expired);
                 const createdTask = yield this.taskRepository.create(task);
+                console.log('createTask', task);
                 return Promise.resolve(createdTask);
             }
             catch (error) {

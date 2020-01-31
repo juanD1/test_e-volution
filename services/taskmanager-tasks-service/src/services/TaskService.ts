@@ -14,7 +14,9 @@ export default class TaskService {
 
   async createTask(task: Task): Promise<Task> {
     try {
+      task.expired = new Date(task.expired);
       const createdTask: Task = await this.taskRepository.create(task);
+      console.log('createTask', task);
 
       return Promise.resolve(createdTask);
     } catch (error) {
