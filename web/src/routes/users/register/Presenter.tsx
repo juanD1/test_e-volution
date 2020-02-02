@@ -84,14 +84,14 @@ export const RegisterPresenter: React.FunctionComponent<RegisterPresenterProps> 
               </MDBInput>
             </div>
             <div className="text-center">
-              <MDBBtn color="primary" disabled={props.disabledButton} onClick={props.handleSubmit}>Login</MDBBtn>
+              <MDBBtn color="primary" disabled={props.disabledButton} onClick={props.handleSubmit}>Sign in</MDBBtn>
               {props.errorMessage.length > 0 && <MDBAlert color="danger">{props.errorMessage}</MDBAlert>}
               {props.successfullMessage && <MDBAlert color="success">{props.successfullMessage}</MDBAlert>}              
             </div>
           </form>
           <MDBModalFooter>
             <div className="font-weight-light">
-              <p style={{paddingLeft: 5, color: '#5a95f5', cursor: 'pointer'}} onClick={props.redirectToLogin}>Go to login</p>
+              <p style={{paddingLeft: 5, color: '#5a95f5', cursor: 'pointer'}} onClick={props.redirectToLogin}>Go to log in</p>
             </div>
           </MDBModalFooter>
         </MDBCol>

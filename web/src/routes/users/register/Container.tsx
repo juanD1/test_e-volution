@@ -35,11 +35,7 @@ interface RegisterContainerState {
 
 class RegisterContainer extends React.Component<RegisterContainerProps, RegisterContainerState> {
   constructor(props: RegisterContainerProps) {
-    super(props)
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);    
-    this.redirectToLogin = this.redirectToLogin.bind(this);
-    this.resetStates = this.resetStates.bind(this);    
+    super(props)   
     this.state = {
       username: '',
       email: '',
@@ -125,11 +121,11 @@ class RegisterContainer extends React.Component<RegisterContainerProps, Register
     }
   }
 
-  redirectToLogin(e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>){
+  redirectToLogin = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
     this.props.history.push('/');
   }
 
-  resetStates(){
+  resetStates = () => {
     this.setState({
       username: '',
       email: '',

@@ -33,15 +33,7 @@ interface HomeContainerState {
 
 class HomeContainer extends React.Component<HomeContainerProps, HomeContainerState> {
   constructor(props: HomeContainerProps) {
-    super(props)
-    this.onClickActiveModal = this.onClickActiveModal.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onChangeDateTimeHandler = this.onChangeDateTimeHandler.bind(this);
-    this.nearstTask = this.nearstTask.bind(this);    
-    this.logout = this.logout.bind(this);
-    this.createTask = this.createTask.bind(this);
-    this.updateTask = this.updateTask.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);    
+    super(props)   
     this.state = {
       taskId: '',
       nameTask: '',
@@ -95,7 +87,7 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     this.setState({ expiredTask: dateTime });
   }
 
-  nearstTask(tasks: Task[]): Task | null {
+  nearstTask = (tasks: Task[]): Task | null => {
     if (this.props.loadedTasks && this.props.loadedTasks.length) {
       const sortedTasks = tasks.sort((a: Task, b: Task) => {
         return new Date(a.expired).getTime() - new Date(b.expired).getTime();
@@ -106,7 +98,7 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     }
   }
 
-  logout() {
+  logout = () => {
     this.props.requestUserLogout();
     this.props.clearSecurity();
     this.props.clearTasks();
@@ -114,17 +106,17 @@ class HomeContainer extends React.Component<HomeContainerProps, HomeContainerSta
     persistor.purge();
   }
 
-  createTask(task: Task) {
+  createTask = (task: Task) => {
     this.props.requestCreateTask(task);
     this.setState({ activedCreateModal: false });
   }
 
-  updateTask(taskId: string, task: Task) {
+  updateTask = (taskId: string, task: Task) => {
     this.props.requestUpdateTask(taskId, task);
     this.setState({ activedUpdateModal: false });
   }
 
-  deleteTask(taskId: string) {
+  deleteTask = (taskId: string) => {
     this.props.requestDeleteTask(taskId);
     this.setState({ activedDeleteModal: false });
   }

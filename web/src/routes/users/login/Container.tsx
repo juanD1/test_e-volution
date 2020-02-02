@@ -9,7 +9,6 @@ import { Credentials } from 'src/models/Credentials';
 import { LoginPresenter } from './Presenter';
 import { defaultValidatorValue, validEmailRegex, validateForm } from 'src/utils/validators/validator';
 
-
 interface LoginContainerProps {
   history: any;
   isAuthenticated: boolean;
@@ -36,10 +35,6 @@ interface LoginContainerState {
 class LoginContainer extends React.Component<LoginContainerProps, LoginContainerState> {
   constructor(props: LoginContainerProps) {
     super(props)
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onIconClick = this.onIconClick.bind(this);
-    this.onAuthenticateClick = this.onAuthenticateClick.bind(this);    
-    this.redirectToRegister = this.redirectToRegister.bind(this);
     this.state = {
       email: '',
       password: '',
@@ -77,7 +72,7 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
     }
   }
 
-  onAuthenticateClick() {
+  onAuthenticateClick = () => {
     const {email, password} = this.state;
     this.props.clearLoginFailure();
     this.props.requestLogin({ email, password });
@@ -110,11 +105,11 @@ class LoginContainer extends React.Component<LoginContainerProps, LoginContainer
     this.setState({ errors, [name]: value, disabledButton: validateForm(errors)});        
   }
 
-  onIconClick(e: React.SyntheticEvent<MouseEvent>) {
+  onIconClick = (e: React.SyntheticEvent<MouseEvent>) => {
     this.setState({showPassword: !this.state.showPassword});    
   }
 
-  redirectToRegister(e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>){
+  redirectToRegister = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
     this.props.history.push(`/register`)
   }
 

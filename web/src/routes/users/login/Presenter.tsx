@@ -28,7 +28,7 @@ export const LoginPresenter: React.FunctionComponent<LoginPresenterProps> = prop
         <MDBCol lg="3" md="3" sm="3" xs="3"/>
         <MDBCol lg="6" md="6" sm="6" xs="6">
           <form >
-            <p className="h5 text-center mb-4">Sign in</p>
+            <p className="h5 text-center mb-4">Log in</p>
             <div className="grey-text">
               <MDBInput
                 name="email"
