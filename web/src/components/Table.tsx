@@ -8,9 +8,9 @@ import { Modal } from './Modal';
 interface TableProps {
   tasks: Task[];
   loggedUser: LoggedUser;
-  selectedTaskId: string
+  selectedTaskId: string;
   nameTask: string;
-  priorityTask: Priority;
+  priorityTask: Priority | String;
   expiredTask: Date;
   activedUpdateModal: boolean;
   activedDeleteModal: boolean;
@@ -21,13 +21,13 @@ interface TableProps {
   deleteTask(taskId: string): void;
 }
 
-export const Table: React.FC<TableProps> = (props) => {
+export const Table: React.FC<TableProps> = props => {
   const data = {
     columns: [
       {
         label: 'Task Name',
         field: 'name',
-        sort: 'disabled',        
+        sort: 'disabled',
       },
       {
         label: 'Priority',
@@ -42,35 +42,44 @@ export const Table: React.FC<TableProps> = (props) => {
       {
         label: 'Actions',
         field: 'actions',
-        sort: 'disabled'
-      }
+        sort: 'disabled',
+      },
     ],
     rows:
-      props.tasks && props.tasks.map((task: Task, index: any) => {
+      props.tasks &&
+      props.tasks.map((task: Task, index: any) => {
         return {
           name: task.name,
           priority: task.priority,
           expired: moment(task.expired).format('MMMM Do YYYY, h:mm:ss a'),
-          actions: <div>
-            <MDBBtn name="activedUpdateModal" color="warning" onClick={(e) => props.onClickActiveModal(e, index, task._id)}>Update</MDBBtn>
-            <MDBBtn name="activedDeleteModal" color="danger" onClick={(e) => props.onClickActiveModal(e, index, task._id)}>Delete</MDBBtn>
-          </div>
-        }
-      }
-    )
-  }
+          actions: (
+            <div>
+              <MDBBtn
+                name="activedUpdateModal"
+                color="warning"
+                onClick={e => props.onClickActiveModal(e, index, task._id)}
+              >
+                Update
+              </MDBBtn>
+              <MDBBtn
+                name="activedDeleteModal"
+                color="danger"
+                onClick={e => props.onClickActiveModal(e, index, task._id)}
+              >
+                Delete
+              </MDBBtn>
+            </div>
+          ),
+        };
+      }),
+  };
 
   if (props.tasks && props.tasks.length) {
     return (
-      <div style={{margin: 6}}>
+      <div style={{ margin: 6 }}>
         <MDBContainer>
-          <MDBDataTable
-            striped
-            bordered
-            small
-            data={data}
-          /> 
-        </MDBContainer>        
+          <MDBDataTable striped bordered small data={data} />
+        </MDBContainer>
         <Modal
           modal={props.activedUpdateModal}
           name="activedUpdateModal"
@@ -78,43 +87,40 @@ export const Table: React.FC<TableProps> = (props) => {
           principalButton={{
             text: 'Update',
             color: 'warning',
-            onClick: () => props.updateTask(props.selectedTaskId, {
-              userId: props.loggedUser.id,
-              name: props.nameTask,
-              priority: props.priorityTask,
-              expired: props.expiredTask
-            })
+            onClick: () =>
+              props.updateTask(props.selectedTaskId, {
+                userId: props.loggedUser.id,
+                name: props.nameTask,
+                priority: props.priorityTask,
+                expired: props.expiredTask,
+              }),
           }}
           fields={[
-            { 
+            {
               typeComponent: 'INPUT',
               name: 'nameTask',
               label: 'Task Name',
               type: 'text',
-              value: props.nameTask,            
-              onChangeHandler: props.onChangeHandler
+              value: props.nameTask,
+              onChangeHandler: props.onChangeHandler,
             },
-            { 
+            {
               typeComponent: 'SELECT',
               name: 'priorityTask',
               label: 'input',
               icon: 'tasks',
               type: 'text',
-              options: [
-                { value: Priority.HIGH },
-                { value: Priority.MEDIUM },
-                { value: Priority.LOW }
-              ],
+              options: [{ value: Priority.HIGH }, { value: Priority.MEDIUM }, { value: Priority.LOW }],
               value: props.priorityTask,
-              onChangeHandler: props.onChangeHandler
+              onChangeHandler: props.onChangeHandler,
             },
             {
               typeComponent: 'DATETIMEPICKER',
               name: 'expiredTask',
               type: 'component',
               dateTimevalue: props.expiredTask,
-              onChangeHandler: props.onChangeDateTimeHandler
-            }
+              onChangeHandler: props.onChangeDateTimeHandler,
+            },
           ]}
           toggle={props.onClickActiveModal}
         />
@@ -125,24 +131,24 @@ export const Table: React.FC<TableProps> = (props) => {
           principalButton={{
             text: 'Delete',
             color: 'danger',
-            onClick: () => props.deleteTask(props.selectedTaskId)
+            onClick: () => props.deleteTask(props.selectedTaskId),
           }}
           fields={[
-            { 
+            {
               typeComponent: 'TEXT',
               name: 'activedDeleteModal',
-              label: 'You are going to delete this task \n Are you sure?'
-            }            
+              label: 'You are going to delete this task \n Are you sure?',
+            },
           ]}
           toggle={props.onClickActiveModal}
         />
-    </div>
-    )
+      </div>
+    );
   } else {
     return (
-      <div style={{textAlign: 'center', margin: 50}}>
+      <div style={{ textAlign: 'center', margin: 50 }}>
         <MDBAlert color="warning">You don't have tasks</MDBAlert>
       </div>
-    )
-  }  
-}
+    );
+  }
+};

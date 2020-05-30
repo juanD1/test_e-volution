@@ -7,9 +7,9 @@ import { Table } from 'src/components/Table';
 interface ManagerTasksProps {
   tasks: Task[];
   loggedUser: LoggedUser;
-  selectedTaskId: string
+  selectedTaskId: string;
   nameTask: string;
-  priorityTask: Priority;
+  priorityTask: Priority | String;
   expiredTask: Date;
   activedUpdateModal: boolean;
   activedDeleteModal: boolean;
@@ -23,11 +23,13 @@ interface ManagerTasksProps {
 export const ManagerTasks: React.FunctionComponent<ManagerTasksProps> = props => {
   return (
     <MDBContainer>
-        <div style={{textAlign: 'center'}}>
-          <div style={{display: 'grid'}}>
-            <MDBBtn name="activedCreateModal" color="info" onClick={props.onClickActiveModal}>Create Task</MDBBtn>
-          </div>      
-        <Table 
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ display: 'grid' }}>
+          <MDBBtn name="activedCreateModal" color="info" onClick={props.onClickActiveModal}>
+            Create Task
+          </MDBBtn>
+        </div>
+        <Table
           tasks={props.tasks}
           loggedUser={props.loggedUser}
           selectedTaskId={props.selectedTaskId}
@@ -41,8 +43,8 @@ export const ManagerTasks: React.FunctionComponent<ManagerTasksProps> = props =>
           onChangeDateTimeHandler={props.onChangeDateTimeHandler}
           updateTask={props.updateTask}
           deleteTask={props.deleteTask}
-        />      
+        />
       </div>
     </MDBContainer>
-  )
-}
+  );
+};

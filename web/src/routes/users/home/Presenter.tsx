@@ -1,6 +1,6 @@
 import * as React from 'react';
 import moment from 'moment';
-import { MDBBtn, MDBIcon, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
+import { MDBBtn, MDBIcon, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdbreact';
 import { ManagerTasks } from 'src/components/ManagerTasks';
 import { Modal } from 'src/components/Modal';
 import { LoggedUser } from 'src/state/security/types';
@@ -10,9 +10,9 @@ interface HomePresenterProps {
   history: any;
   loggedUser: LoggedUser;
   tasks: Task[];
-  selectedTaskId: string
+  selectedTaskId: string;
   nameTask: string;
-  priorityTask: Priority;
+  priorityTask: Priority | String;
   expiredTask: Date;
   activedCreateModal: boolean;
   activedUpdateModal: boolean;
@@ -31,30 +31,29 @@ export const HomePresenter: React.FunctionComponent<HomePresenterProps> = props 
   const nearstTask = props.nearstTask(props.tasks);
   return (
     <div>
-      <div style={{ height: `${props.tasks && props.tasks.length ? '40vh' : '10vh'}`}}>
-        <MDBBtn tag="a" size="lg" gradient="blue" style={{float: 'right'}} onClick={props.logout}>
+      <div style={{ height: `${props.tasks && props.tasks.length ? '40vh' : '10vh'}` }}>
+        <MDBBtn tag="a" size="lg" gradient="blue" style={{ float: 'right' }} onClick={props.logout}>
           <MDBIcon icon="sign-out-alt" />
         </MDBBtn>
-          <h1>Welcome {props.loggedUser.username}</h1>
+        <h1>Welcome {props.loggedUser.username}</h1>
         <div className="d-flex justify-content-center">
-          {props.tasks && props.tasks.length ?
-            <MDBCard style={{ width: "22em" }}>
+          {props.tasks && props.tasks.length ? (
+            <MDBCard style={{ width: '22em' }}>
               <MDBCardBody>
                 <MDBCardTitle>Nearst Task</MDBCardTitle>
                 <MDBCardText>
                   <span>
-                    {nearstTask && nearstTask.name} <br/>
-                    priority <strong>{nearstTask && nearstTask.priority}</strong> <br/>
+                    {nearstTask && nearstTask.name} <br />
+                    priority <strong>{nearstTask && nearstTask.priority}</strong> <br />
                     Will expire on {nearstTask && moment(nearstTask.expired).format('MMMM Do YYYY, h:mm:ss a')}
                   </span>
                 </MDBCardText>
               </MDBCardBody>
             </MDBCard>
-            : null
-          }
-        </div>       
+          ) : null}
+        </div>
       </div>
-      <ManagerTasks 
+      <ManagerTasks
         tasks={props.tasks}
         loggedUser={props.loggedUser}
         selectedTaskId={props.selectedTaskId}
@@ -76,47 +75,44 @@ export const HomePresenter: React.FunctionComponent<HomePresenterProps> = props 
         principalButton={{
           text: 'Create',
           color: 'success',
-          onClick: () => props.createTask({ 
-            userId: props.loggedUser.id,
-            name: props.nameTask,
-            priority: props.priorityTask,
-            expired: props.expiredTask
-          })
+          onClick: () =>
+            props.createTask({
+              userId: props.loggedUser.id,
+              name: props.nameTask,
+              priority: props.priorityTask,
+              expired: props.expiredTask,
+            }),
         }}
         fields={[
-          { 
+          {
             typeComponent: 'INPUT',
             name: 'nameTask',
             label: 'input',
             icon: 'tasks',
             type: 'text',
             value: props.nameTask,
-            onChangeHandler: props.onChangeHandler
+            onChangeHandler: props.onChangeHandler,
           },
-          { 
+          {
             typeComponent: 'SELECT',
             name: 'priorityTask',
             label: 'input',
             icon: 'tasks',
             type: 'text',
-            options: [
-              { value: Priority.HIGH },
-              { value: Priority.MEDIUM },
-              { value: Priority.LOW }
-            ],
+            options: [{ value: Priority.HIGH }, { value: Priority.MEDIUM }, { value: Priority.LOW }],
             value: props.priorityTask,
-            onChangeHandler: props.onChangeHandler
+            onChangeHandler: props.onChangeHandler,
           },
           {
             typeComponent: 'DATETIMEPICKER',
             name: 'expiredTask',
             type: 'component',
             dateTimevalue: props.expiredTask,
-            onChangeHandler: props.onChangeDateTimeHandler
-          }
+            onChangeHandler: props.onChangeDateTimeHandler,
+          },
         ]}
         toggle={props.onClickActiveModal}
       />
     </div>
   );
-}
+};
